@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Aforo en Tiempo Real</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #111; color: #0f0; }
+    h1 { font-size: 30px; }
+    .dato { font-size: 24px; margin: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Monitor de Aforo</h1>
+  <div class="dato" id="aforo"></div>
+  <div class="dato" id="entradas"></div>
+  <div class="dato" id="salidas"></div>
+
+  <script>
+    function actualizar() {
+      fetch('/datos')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('aforo').textContent = `Aforo permitido: ${data.aforo}`;
+          document.getElementById('entradas').textContent = `Entradas: ${data.entradas}`;
+          document.getElementById('salidas').textContent = `Salidas: ${data.salidas}`;
+        });
+    }
+
+    setInterval(actualizar, 1000); // actualizar cada segundo
+    actualizar(); // llamada inicial
+  </script>
+</body>
+</html>
